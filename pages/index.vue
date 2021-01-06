@@ -6,7 +6,7 @@
           <div class="text-lg flex justify-end">
             <div>Aggiornato il {{ lastUpdateDate }}</div>
           </div>
-          <div class="text-6xl font-medium">
+          <div class="text-4xl font-medium">
             {{ total }} Vaccinazioni totali in {{ formVaccineDays }} giorni.
           </div>
           <div class="text-lg">
@@ -50,8 +50,8 @@
             <table class="bg-white w-full">
               <thead class="bg-gray-800 text-white">
                 <tr>
-                  <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Nome</th>
-                  <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Somministrazioni</th>
+                  <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Nome</th>
+                  <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Somministrazioni</th>
                   <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Consegnate</th>
                   <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Percentuale Somministrazioni Consegnate</th>
                   <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Abitanti</th>
@@ -61,8 +61,8 @@
               <tbody class="text-gray-700">
                 <template v-for="(r, i) in regionsList" :keys="`region-${i}`">
                   <tr :class="`${i % 2 ? 'bg-gray-100' : ''}`">
-                    <td class="w-1/3 text-left py-3 px-4">{{ r.nome }}</td>
-                    <td class="w-1/3 text-left py-3 px-4">{{ r.somministrazioni }}</td>
+                    <td class="text-left py-3 px-4">{{ r.nome }}</td>
+                    <td class="text-left py-3 px-4">{{ r.somministrazioni }}</td>
                     <td class="text-left py-3 px-4"><a class="hover:text-blue-500">{{ r.consegnate }}</a></td>
                     <td class="text-left py-3 px-4"><a class="hover:text-blue-500">{{ r.percentualeSomministrazioniConsegnate }}%</a></td>
                     <td class="text-left py-3 px-4"><a class="hover:text-blue-500">{{ r.abitanti }}</a></td>
@@ -70,8 +70,8 @@
                   </tr>
                 </template>
                 <tr :class="`${regionsList.length % 2 ? 'bg-gray-100' : ''}`">
-                  <td class="w-1/3 text-left py-3 px-4">Totale</td>
-                  <td class="w-1/3 text-left py-3 px-4">{{ totalRegions.somministrazioni }}</td>
+                  <td class="text-left py-3 px-4">Totale</td>
+                  <td class="text-left py-3 px-4">{{ totalRegions.somministrazioni }}</td>
                   <td class="text-left py-3 px-4"><a class="hover:text-blue-500">{{ totalRegions.consegnate }}</a></td>
                   <td class="text-left py-3 px-4"><a class="hover:text-blue-500">{{ totalRegions.percentualeSomministrazioniConsegnate }}%</a></td>
                   <td class="text-left py-3 px-4"><a class="hover:text-blue-500">{{ totalRegions.abitanti }}</a></td>
