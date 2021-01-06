@@ -13,6 +13,31 @@ export const dataPost = {
 }
 const dataPostState = _.mapValues(dataPost, d => null)
 
+const peoples = {
+  'Abruzzo': 1305770,
+  'Basilicata': 556934,
+  'Calabria': 1924701,
+  'Campania': 5785861,
+  'Emilia-Romagna': 4467118,
+  'Friuli-Venezia Giulia': 1211357,
+  'Lazio': 5865544,
+  'Liguria': 1543127,
+  'Lombardia': 10103969,
+  'Marche': 1518400,
+  'Molise': 302265,
+  'P.A. Bolzano': 532080,
+  'P.A. Trento': 542739,
+  'Piemonte': 4341375,
+  'Puglia': 4008296,
+  'Sardegna': 1630474,
+  'Sicilia': 4968410,
+  'Toscana': 3722729,
+  'Trentino': 1074819,
+  'Umbria': 880285,
+  'Valle d\'Aosta': 125501,
+  'Veneto': 4907704
+}
+
 const defaultState = () => ({
   ...dataPostState,
   totalRegions: {},
@@ -29,17 +54,29 @@ export default {
       const data = _.keyBy(_.map(_.get(payload, 'results[0].result.data.dsr.DS[0].PH[1].DM1'), d => {
         return {
           nome: d.C[0],
+          abitanti: peoples[d.C[0]],
           somministrazioni: parseInt(d.C[1]),
-          percentualeTotale: parseFloat(d.C[2]),
-          percentuale: Math.round(parseInt(d.C[1]) * 100 / parseInt(d.C[3]) * 100) / 100,
-          consegnate: parseInt(d.C[3])
+          // percentualeTotale: parseFloat(d.C[2]),
+          consegnate: parseInt(d.C[3]),
+          percentualeSomministrazioniConsegnate: Math.round(parseInt(d.C[1]) * 100 / parseInt(d.C[3]) * 100) / 100,
+          percentualeSomministrazioniTotali: Math.round(parseInt(d.C[1]) * 100 / peoples[d.C[0]] * 100) / 100,
         }
       }), 'nome')
+      const totalAbitanti = _.reduce(_.map(data, 'abitanti'), (a, b) => a + b, 0)
+      const totalSomministrazioni = _.reduce(_.map(data, 'somministrazioni'), (a, b) => a + b, 0)
+      const percentualeTotale = Math.round(_.reduce(_.map(data, 'percentualeTotale'), (a, b) => a + b, 0) * 100) / 100
+      const totalConsegnate = _.reduce(_.map(data, 'consegnate'), (a, b) => a + b, 0)
+      const percentualeSomministrazioniConsegnate = Math.round(_.meanBy(_.map(data, 'percentualeSomministrazioniConsegnate')) * 100) / 100
+      const percentualeSomministrazioniTotali = Math.round(totalSomministrazioni * 100 / totalAbitanti * 100) / 100
+      const percentualeConsegnateTotali = Math.round(parseFloat(totalConsegnate / totalAbitanti) * 100) / 100
       const totalRegion = {
-        somministrazioni:  _.reduce(_.map(data, 'somministrazioni'), (a, b) => a + b, 0),
-        percentuale: Math.round(_.meanBy(_.map(data, 'percentuale')) * 100) / 100,
-        percentualeTotale: Math.round(_.reduce(_.map(data, 'percentualeTotale'), (a, b) => a + b, 0) * 100) / 100,
-        consegnate: _.reduce(_.map(data, 'consegnate'), (a, b) => a + b, 0),
+        abitanti: totalAbitanti,
+        somministrazioni: totalSomministrazioni,
+        // percentualeTotale,
+        consegnate: totalConsegnate,
+        percentualeConsegnateTotali,
+        percentualeSomministrazioniConsegnate,
+        percentualeSomministrazioniTotali,
       }
       this.commit('SET_TOTAL_REGIONS', totalRegion)
       this.commit('SET_REGIONS', data)
