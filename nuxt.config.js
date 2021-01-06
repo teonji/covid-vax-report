@@ -1,12 +1,12 @@
 export default {
   ssr: false,
+  server: {
+    port: 7000,
+    host: 'localhost'
+  },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'covid-vax-report',
-    server: {
-      port: 7000,
-      host: 'localhost'
-    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
