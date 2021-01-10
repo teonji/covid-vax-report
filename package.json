@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^3.1.0",
-    "vuex-pathify": "^1.4.5"
+    "numeral": "^2.0.6",
+    "vue-filter-number-format": "^3.0.1"
   }
 }
